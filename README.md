@@ -64,8 +64,10 @@ are sparse, so the left side is large and the inequality fails once d is large.
 | [515,960, 10^200] | 18 intervals with explicit parameters ([`results/certificate.json`](tenth_disc/results/certificate.json)) |
 | [10^40, ∞) | closed form: margin ≥ 0.18 log d − 16 ([`tail.py`](tenth_disc/tail.py)) |
 
-So, **numerically**, Green's argument recovers the class number one theorem
-with threshold ≈ 5·10^5, compared with Oesterlé's e^55 ≈ 10^24.
+So Green's argument recovers the class number one theorem with threshold
+≈ 5·10^5, compared with Oesterlé's e^55 ≈ 10^24. Everything is re-checked in
+**outward-rounded interval arithmetic** (`rigorous.py`): all 18 margins are
+certified positive (smallest 0.00172), and so is the tail bound.
 
 **Checks:**
 - brute-force exact Gram determinants confirm Lemmas 1–3 on small cases (the
@@ -76,14 +78,15 @@ with threshold ≈ 5·10^5, compared with Oesterlé's e^55 ≈ 10^24.
 - the tail closed form agrees with the full engine.
 
 **Caveats:**
-- floating point, no interval arithmetic (the smallest certificate margin is
-  0.0017 in units of R²S);
 - the general Lemma 1 is my own completion and should be checked against
-  Green's note (unreachable from this environment).
+  Green's note (unreachable from this environment);
+- external inputs are Rosser–Schoenfeld's θ(x) > x(1 − 1/(2 log x)) for
+  x ≥ 563 (needed beyond 2·10^6), genus theory and Hadamard's inequality;
+- this is a computer-assisted proof, not yet a formal (Lean) one.
 
 ## Next steps
 
-- Interval-arithmetic certification of `certificate.json`.
+- An independent review of NOTES.md, especially Lemma 1, before posting.
 - Compare Lemma 1 with Green's note, then repeat for the Banks and Kerr
   write-ups and the QRH papers.
 - Better optimiser / sharper Archimedean estimates to lower the threshold.
@@ -92,10 +95,11 @@ with threshold ≈ 5·10^5, compared with Oesterlé's e^55 ≈ 10^24.
 
     cd tenth_disc
     python3 reduction.py                     # table above
-    python3 -m unittest test_reduction test_green_explicit test_tail
+    python3 -m unittest test_reduction test_green_explicit test_tail test_rigorous
     python3 certify.py --verify              # re-check the certificate (~1 min)
+    python3 rigorous.py                      # interval-arithmetic proof (~5 min)
     python3 certify.py                       # redo the search (~1 hour)
 
-Needs numpy; sympy is optional (one symbolic test).
+Needs numpy and mpmath; sympy is optional (one symbolic test).
 
 *AI disclosure: the code and write-up were produced with Claude Code (Anthropic).*

@@ -10,11 +10,12 @@ Green's argument.*
 
 **AI disclosure:** produced with Claude Code (Anthropic). Every lemma is
 checked by brute force on small cases (`test_green_explicit.py`). The
-numerics use IEEE floats and are **not** interval-certified.
+certificate is re-checked in outward-rounded interval arithmetic
+(`rigorous.py`, mpmath.iv at 160 bits).
 
 ## Result
 
-> **Claim (numerically explicit).** Green's polynomial-method argument, with
+> **Claim (verified in interval arithmetic).** Green's polynomial-method argument, with
 > the explicit constants below, shows that an imaginary quadratic field
 > Q(√−d) with d > 163 and class number one must have d < 515,960.
 > An elementary check (every prime d ≡ 3 mod 8 in (163, 515,960] has a prime
@@ -140,21 +141,30 @@ primes occur.
   I(S) = ½ log S − ½ + (log S + 2)/(4S) (checked with sympy). Also
   ∫₀^T f ≤ (R²S/2)(1 + log(TS/R)), f(T) ≤ R²S/(2T), and θ(10^6) = 998484.175….
   With L = log d and log S ≥ L − log 256 − o(1), the normalised prime side is
-  ≥ 0.96381 L − 17.578.
+  ≥ 0.96381 L − 16.614.
 * **Archimedean side.** ρ² ≤ 0.138125 d^{3/2}(1 + 10^{−9}), so
   log ρ ≤ ¾L − 0.98977. Also log R − log ρ ≤ L/4. The normalised Lemma 2
   bound is then ≤ (65/64)(¾L − 0.98977) + L/64 + o(1) = 0.77734 L − 1.0052.
 
-So the margin is ≥ 0.18647 L − 16.573 ≥ 0.18 L − 16 > 0 for L ≥ log 10^40.
+So the margin is ≥ 0.18646 L − 15.609 − o(1) ≥ 0.18 L − 16 > 0 for L ≥ log 10^40.
+`rigorous.check_tail` recomputes these constants in interval arithmetic and
+absorbs every o(1) term into 10^{−38} L + 10^{−8}. Each such term is
+log(1 − 4/d), log(1 − 64/R), (R−1)²/R², 3L/R, or a 10^{−9} correction in the
+bounds for log ρ.
 `tail.py` evaluates the same closed form without the linearisation. The
 tests check it against the full numerical engine.
 
 ## Caveats
 
-* Floating point throughout; no interval arithmetic yet. The margins on the
-  certificate are mostly large; the smallest is 0.0017 (in units of R²S).
+* **Rigour.** `rigorous.py` re-evaluates every certificate interval and the
+  tail constants with outward-rounded interval arithmetic. Floats only choose
+  the Abel grid points. All 18 margins are certified positive (smallest
+  0.00172, in units of R²S), and they agree with the float values to 6
+  digits. The script takes about 5 minutes.
 * Lemma 1 in the general (reducible P) case is my own argument. It should be
   compared against Green's note.
-* External inputs: Rosser–Schoenfeld (1962) bounds for θ(x); genus theory;
-  the norm form of split primes.
+* External inputs: Rosser–Schoenfeld (1962, Thm 4),
+  θ(x) > x(1 − 1/(2 log x)) for x ≥ 563, used only for x ≥ 2·10^6 and checked
+  directly below that (`test_rigorous.py`); genus theory; the norm form of
+  split primes; Hadamard's inequality.
 * The parameter search is heuristic, so a better optimiser may lower 515,960.
