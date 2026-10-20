@@ -16,8 +16,8 @@ numerics use IEEE floats and are **not** interval-certified.
 
 > **Claim (numerically explicit).** Green's polynomial-method argument, with
 > the explicit constants below, shows that an imaginary quadratic field
-> Q(√−d) with d > 163 and class number one must have d < __D0__.
-> An elementary check (every prime d ≡ 3 mod 8 in (163, __D0__] has a prime
+> Q(√−d) with d > 163 and class number one must have d < 515,960.
+> An elementary check (every prime d ≡ 3 mod 8 in (163, 515,960] has a prime
 > p < d/4 with (−d/p) = +1) disposes of the rest. So the method recovers
 > the class number one theorem without Heegner/Stark/Baker, modulo the
 > caveats at the end.
@@ -26,8 +26,8 @@ For comparison: Goldfeld–Oesterlé give d ≤ e^55 ≈ 7.7·10^23.
 
 | range of d | how it is excluded | where |
 |---|---|---|
-| (163, __D0__] | some p < d/4 splits, so h > 1 (elementary) | `certify.small_d_check` |
-| [__D0__, 10^200] | finitely many intervals, each with explicit parameters (N1, N2, R, S, J) violating (\*) | `results/certificate.json`, `certify.py --verify` |
+| (163, 515,960] | some p < d/4 splits, so h > 1 (elementary) | `certify.small_d_check` |
+| [515,960, 10^200] | finitely many intervals, each with explicit parameters (N1, N2, R, S, J) violating (\*) | `results/certificate.json`, `certify.py --verify` |
 | [10^40, ∞) | closed form: margin ≥ 0.18 log d − 16 > 0 | `tail.py`, derivation below |
 
 ## Setup
@@ -152,9 +152,9 @@ tests check it against the full numerical engine.
 ## Caveats
 
 * Floating point throughout; no interval arithmetic yet. The margins on the
-  certificate are mostly large; the smallest is __MINMARGIN__ (in units of R²S).
+  certificate are mostly large; the smallest is 0.0017 (in units of R²S).
 * Lemma 1 in the general (reducible P) case is my own argument. It should be
   compared against Green's note.
 * External inputs: Rosser–Schoenfeld (1962) bounds for θ(x); genus theory;
   the norm form of split primes.
-* The parameter search is heuristic, so a better optimiser may lower __D0__.
+* The parameter search is heuristic, so a better optimiser may lower 515,960.

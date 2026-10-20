@@ -45,20 +45,57 @@ yet a certified interval computation. Also, this reduction is elementary and
 classical in spirit (Heilbronn–Linfoot-style use of the principal form), so
 there is no claim of novelty.
 
+## Step 2: Green's argument made explicit → d < 515,960
+
+Details and proofs are in [`tenth_disc/NOTES.md`](tenth_disc/NOTES.md).
+Rather than passing through (H), I apply Green's lattice argument directly to
+a hypothetical tenth discriminant. Lemmas 1–3 of Tao's sketch are all made
+explicit; Lemma 1 is proved in general, without the "P irreducible" cheat.
+The result is a finite inequality
+
+    2 Σ_{p odd inert} K_p log p ≤ log M ≤ (Hadamard bound)
+
+that h(−d) = 1 forces. Under h(−d) = 1, all p < d/4 are inert and split primes
+are sparse, so the left side is large and the inequality fails once d is large.
+
+| range | excluded by |
+|---|---|
+| (163, 515,960] | elementary: some prime p ≤ 43 below d/4 splits |
+| [515,960, 10^200] | 18 intervals with explicit parameters ([`results/certificate.json`](tenth_disc/results/certificate.json)) |
+| [10^40, ∞) | closed form: margin ≥ 0.18 log d − 16 ([`tail.py`](tenth_disc/tail.py)) |
+
+So, **numerically**, Green's argument recovers the class number one theorem
+with threshold ≈ 5·10^5, compared with Oesterlé's e^55 ≈ 10^24.
+
+**Checks:**
+- brute-force exact Gram determinants confirm Lemmas 1–3 on small cases (the
+  v_p bound is often sharp);
+- with real splitting data, the unconditional inequality never fails across
+  200+ random parameter sets (ratio ≤ 0.52, matching Green's "½");
+- genuine Heegner numbers (d ≤ 163) are never excluded;
+- the tail closed form agrees with the full engine.
+
+**Caveats:**
+- floating point, no interval arithmetic (the smallest certificate margin is
+  0.0017 in units of R²S);
+- the general Lemma 1 is my own completion and should be checked against
+  Green's note (unreachable from this environment).
+
 ## Next steps
 
-- Make Green's bound (2) fully explicit: the O(ε) terms in Lemma 2 (Hadamard),
-  Lemma 3 (the k_{i,j} basis count), the O(1) losses in Lemma 1 (resultant degree
-  count), and the optimisation over ε, N, R, S, J. That gives (H) with an explicit C.
-- Do the same for the Banks and Kerr write-ups and the QRH papers, and compare.
-- Make the threshold rigorous (interval arithmetic or a monotonicity proof).
+- Interval-arithmetic certification of `certificate.json`.
+- Compare Lemma 1 with Green's note, then repeat for the Banks and Kerr
+  write-ups and the QRH papers.
+- Better optimiser / sharper Archimedean estimates to lower the threshold.
 
 ## Running
 
     cd tenth_disc
     python3 reduction.py                     # table above
-    python3 -m unittest -v test_reduction    # checks bounds vs exact sums for d = 11..163
+    python3 -m unittest test_reduction test_green_explicit test_tail
+    python3 certify.py --verify              # re-check the certificate (~1 min)
+    python3 certify.py                       # redo the search (~1 hour)
 
-Standard library only (Python ≥ 3.9).
+Needs numpy; sympy is optional (one symbolic test).
 
 *AI disclosure: the code and write-up were produced with Claude Code (Anthropic).*
