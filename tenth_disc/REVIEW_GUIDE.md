@@ -11,6 +11,9 @@ AI use.
 
 ## A. Undergraduate-checkable (linear algebra, elementary number theory)
 
+A printable, self-contained version of this section (with each statement and
+proof inline) is in `REVIEW_SECTION_A.pdf`.
+
 - [ ] **Lemma 3 (p-adic bound).** It needs Fermat's little theorem, the
   binomial theorem and the product rule.
   - Check (m + n√D)^p ≡ m − n√D (mod p) when D is a non-residue mod p.

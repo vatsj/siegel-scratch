@@ -172,7 +172,8 @@ d_hi.
 
 ## The tail d ≥ 10^40 (closed form)
 
-Take R = ⌊d/4⌋, S = ⌊R/64⌋, J = 2S, N2 = ⌈d^{1/4}/2⌉ and N1 = ⌈1.1R/N2⌉.
+Take R = ⌊d/4⌋, S = ⌊R/64⌋, J = 2S, N2 = ⌈⌊⌊√d⌋^{1/2}⌋/2⌉ + 1 (so
+d^{1/4}/2 ≤ N2 ≤ d^{1/4}/2 + 2) and N1 = ⌈1.1R/N2⌉.
 Every odd p < R is then < d/4, so it is inert, and no split or ramified
 primes occur.
 
@@ -189,8 +190,8 @@ primes occur.
   With L = log d and log S ≥ L − log 256 − o(1), the normalised prime side is
   ≥ 0.96381 L − 16.614.
 * **Archimedean side.** ρ² ≤ 0.138125 d^{3/2}(1 + 10^{−9}), so
-  log ρ ≤ ¾L − 0.98977. Also log R − log ρ ≤ L/4. The normalised Lemma 2
-  bound is then ≤ (65/64)(¾L − 0.98977) + L/64 + o(1) = 0.77734 L − 1.0052.
+  log ρ ≤ ¾L − 0.98980. Also log R − log ρ ≤ L/4. The normalised Lemma 2
+  bound is then ≤ (65/64)(¾L − 0.98980) + L/64 + o(1) = 0.77734 L − 1.0053.
 
 So the margin is ≥ 0.18646 L − 15.609 − o(1) ≥ 0.18 L − 16 > 0 for L ≥ log 10^40.
 `rigorous.check_tail` recomputes these constants in interval arithmetic and
