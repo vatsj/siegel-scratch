@@ -78,15 +78,17 @@ certified positive (smallest 0.00172), and so is the tail bound.
 - the tail closed form agrees with the full engine.
 
 **Caveats:**
-- the general Lemma 1 is my own completion and should be checked against
-  Green's note (unreachable from this environment);
+- Lemma 1 (general case) has been checked against Green's note (his Lemma
+  3.1 and A.1): it is the same argument without his J ≥ N assumption;
 - external inputs are Rosser–Schoenfeld's θ(x) > x(1 − 1/(2 log x)) for
   x ≥ 563 (needed beyond 2·10^6), genus theory and Hadamard's inequality;
 - this is a computer-assisted proof, not yet a formal (Lean) one.
 
 ## Next steps
 
-- An independent review of NOTES.md, especially Lemma 1, before posting.
+- Adopt Green's deg F₀ cancellation in Lemma 1 (a slightly better criterion)
+  and rerun the search.
+- An independent human review of NOTES.md before posting.
 - Compare Lemma 1 with Green's note, then repeat for the Banks and Kerr
   write-ups and the QRH papers.
 - Better optimiser / sharper Archimedean estimates to lower the threshold.

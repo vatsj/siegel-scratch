@@ -3,10 +3,11 @@
 *Working notes for Tao's
 [AI-math challenge](https://terrytao.wordpress.com/2026/10/20/an-experimental-ai-math-challenge-using-tenth-discriminant-bounds-to-explore-arguments-ruling-out-siegel-zeroes/).
 They follow Tao's [sketch of Green's argument](https://terrytao.wordpress.com/2026/10/19/a-sketch-of-the-proof-of-non-existence-of-siegel-zeroes/).
-Green's own note, and the Banks/Kerr preprints, were not reachable from the
-environment these notes were written in. So the general injectivity lemma
-below is my own completion of the "irreducible P" cheat in the sketch, not
-Green's argument.*
+I wrote the general injectivity lemma below before seeing Green's note
+(B. Green, *On Landau–Siegel zeros*, hexagonmath 2610.00311v2). I have since
+checked it against his Lemma 3.1 and Lemma A.1, and it agrees with them; see
+the remark after the proof. The Banks and Kerr preprints have not been
+consulted.*
 
 **AI disclosure:** produced with Claude Code (Anthropic). Every lemma is
 checked by brute force on small cases (`test_green_explicit.py`). The
@@ -80,6 +81,24 @@ r_i ≥ 1 and z2-degree s_i. Then Σ e_i r_i ≤ R − 1 and deg A + Σ e_i s_i 
 Now combine. Σ_{e∈E'} Σ_i e_i μ_i(e) ≤ Σ_i e_i [(μ−1)_+ count + zero count].
 This is ≤ 2(R−1)(S−1) + max(N1,N2)(R + S − 2), using
 Σ e_i r_i s_i ≤ (R−1)(S−1). The left side is ≥ J|E'|, a contradiction. ∎
+
+*Comparison with Green's note.* This is the argument of Green's Lemma 3.1.
+His Lemma A.1, ord_{z0} F(·, c) ≤ 1 + ord_{c} Res_z(F, ∂_z F), is step 3; he
+proves it by a rank argument rather than by multilinearity. Three
+differences:
+
+* Green assumes J ≥ N, so Schwartz–Zippel gives ≤ J·deg F zeros. His
+  criterion is N²J > 2RS + J(R + S). Here the zero count (r_i + s_i)·max(N1, N2)
+  is used directly, which allows any J and a rectangular centred grid.
+* Green factors over C, and I factor over Q, hence the conjugate argument in
+  step 2.
+* Green cancels deg F₀ between the two sides. Doing the same here would
+  sharpen the criterion to
+  J·N1N2 > max(2(R−1)(S−1) + N(R+S−2), J(S−1) + N(R−1)), with N = max(N1, N2).
+  This is not used yet; it would lower the threshold slightly.
+
+Lemma 3 below is exactly Green's Lemma 5.1. He uses the pairing
+tr(αβ̄) = 2 Re(αβ̄), which changes M by the harmless factor 2^{RS}.
 
 ## Lemma 2 (Archimedean)
 
@@ -161,8 +180,9 @@ tests check it against the full numerical engine.
   the Abel grid points. All 18 margins are certified positive (smallest
   0.00172, in units of R²S), and they agree with the float values to 6
   digits. The script takes about 5 minutes.
-* Lemma 1 in the general (reducible P) case is my own argument. It should be
-  compared against Green's note.
+* Lemma 1 has been compared with Green's Lemma 3.1/A.1 (see the remark
+  after its proof). It is the same argument in a slightly more general
+  setting.
 * External inputs: Rosser–Schoenfeld (1962, Thm 4),
   θ(x) > x(1 − 1/(2 log x)) for x ≥ 563, used only for x ≥ 2·10^6 and checked
   directly below that (`test_rigorous.py`); genus theory; the norm form of
