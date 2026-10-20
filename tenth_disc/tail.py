@@ -16,7 +16,7 @@ is decreasing with f(R-1) = 0.  Abel summation gives
 
     sum_{T<p<R} f(p) log p = -f(T) theta(T) + int_T^{R-1} theta(t) (-f'(t)) dt.
 
-For t >= T, Rosser-Schoenfeld gives theta(t) >= (1 - eta) t with
+For t >= T, Rosser-Schoenfeld (1962, eq. (3.14)) gives theta(t) >= (1 - eta) t with
 eta = 1/(2 log T).  Hence
 
     sum >= (1 - eta) (int_0^{R-1} f - int_0^T f) - f(T) (theta(T) - (1 - eta) T).

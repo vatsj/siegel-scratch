@@ -53,8 +53,9 @@ AI use.
   to follow.
 - [ ] **Lemma 1, the rest.** Factorisation over Q and Schwartz–Zippel on the
   rectangle. Compare with Green's Lemma 3.1.
-- [ ] **Rosser–Schoenfeld.** Confirm that their Theorem 4 states
-  θ(x) > x(1 − 1/(2 log x)) for x ≥ 563.
+- [x] **Rosser–Schoenfeld.** Theorem 4, eq. (3.14) of *Illinois J. Math.* 6
+  (1962), p. 70, states x(1 − 1/(2 log x)) < θ(x) for 563 ≤ x. Checked
+  against the paper. Eq. (3.21), used in `reduction.py`, is on the same page.
 - [ ] **Code matches maths.** Check that `rigorous.py` computes exactly the
   inequalities stated in NOTES.md.
 
@@ -66,6 +67,5 @@ AI use.
 > arithmetic. Lemmas 1–3 are also checked by exact computation on small
 > cases. Human review so far: [describe exactly what was checked, by whom,
 > e.g. "sections A–B checked by a reader with an undergraduate maths
-> background; Lemma 1 and the Rosser–Schoenfeld citation not independently
-> reviewed by a specialist"]. Independent AI check: [tool, what it was asked,
-> outcome].
+> background; Lemma 1 not independently reviewed by a specialist"].
+> Independent AI check: [tool, what it was asked, outcome].

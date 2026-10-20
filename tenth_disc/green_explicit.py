@@ -61,7 +61,8 @@ Hence v_p(M) >= 2 K_p.
 
 Prime sums use exact enumeration for p <= P_ENUM.  Beyond that they use Abel
 summation against a decreasing minorant f(t) <= K_t, together with
-Rosser-Schoenfeld (1962): t (1 - 1/(2 log t)) < theta(t) for t >= 563.
+Rosser-Schoenfeld (1962, Thm 4, eq. (3.14)): t (1 - 1/(2 log t)) < theta(t)
+for t >= 563.
 
 Floating point is used throughout, so the results are "numerically
 explicit", not certified by interval arithmetic.

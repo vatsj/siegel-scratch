@@ -141,7 +141,7 @@ The left side is bounded below as follows:
   ramified prime p = d if d < R.
 * For p ≤ 2·10^6, sum K_p exactly.
 * Beyond that, use Abel summation against the decreasing minorant f(t) of
-  K_t (lemma below), with Rosser–Schoenfeld,
+  K_t (lemma below), with Rosser–Schoenfeld (1962, (3.14)),
   θ(t) > t(1 − 1/(2 log t)) for t ≥ 563, on a fine geometric grid t_k. Only
   monotonicity is used, so the discretisation is one-sided:
   Σ_{P0<p≤X} f(p) log p = −f(P0)θ(P0) + ∫_{P0}^{X} θ(t)(−f′(t)) dt
@@ -210,7 +210,8 @@ tests check it against the full numerical engine.
 * Lemma 1 has been compared with Green's Lemma 3.1/A.1 (see the remark
   after its proof). It is the same argument in a slightly more general
   setting.
-* External inputs: Rosser–Schoenfeld (1962, Thm 4),
+* External inputs: Rosser–Schoenfeld, *Illinois J. Math.* 6 (1962), Thm 4, eq. (3.14)
+  (checked against the paper),
   θ(x) > x(1 − 1/(2 log x)) for x ≥ 563, used only for x ≥ 2·10^6 and checked
   directly below that (`test_rigorous.py`); genus theory; the norm form of
   split primes; Hadamard's inequality.

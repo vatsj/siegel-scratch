@@ -80,7 +80,7 @@ certified positive (smallest 0.00172), and so is the tail bound.
 **Caveats:**
 - Lemma 1 (general case) has been checked against Green's note (his Lemma
   3.1 and A.1): it is the same argument without his J ≥ N assumption;
-- external inputs are Rosser–Schoenfeld's θ(x) > x(1 − 1/(2 log x)) for
+- external inputs are Rosser–Schoenfeld's (3.14), θ(x) > x(1 − 1/(2 log x)) for
   x ≥ 563 (needed beyond 2·10^6), genus theory and Hadamard's inequality;
 - this is a computer-assisted proof, not yet a formal (Lean) one.
 

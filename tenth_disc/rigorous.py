@@ -95,7 +95,8 @@ def f_interval(t, R, S):
 
 
 def theta_lower(t):
-    """Rosser-Schoenfeld: theta(t) > t (1 - 1/(2 log t)) for t >= 563."""
+    """Rosser-Schoenfeld (1962), Thm 4, eq. (3.14):
+    theta(t) > t (1 - 1/(2 log t)) for t >= 563."""
     ti = X(t)
     assert t >= 563
     return lo(ti * (1 - 1 / (2 * iv.log(ti))))
