@@ -21,26 +21,29 @@ reduction.py).  Then
 where K_p = sum_{i<R, j<S} min(floor(i/p), S-1-j) (Lemma 3, exact count).
 If (*) fails for some admissible parameters, then h(-d) = 1 is impossible.
 
-Lemma 1 (injectivity), general form.  T is injective whenever
+Lemma 1 (injectivity), general form (cf. Green's Lemma 3.1).  With
+N = max(N1, N2), T is injective whenever
 
-    J (N1 N2 - S + 1)  >  2 (R-1)(S-1) + max(N1, N2) (R + S - 2).
+    J N1 N2  >  max( 2 (R-1)(S-1) + N (R + S - 2),  J (S-1) + N (R-1) ).
 
 Proof sketch (no irreducibility assumption).  Let P != 0 vanish to
 horizontal order >= J on E, and write P = A(z2) prod_i F_i^{e_i}, with
-F_i distinct irreducible factors of z1-degree r_i >= 1 and z2-degree s_i.
-  - A has degree <= S-1 and the z2-coordinates of E are distinct, so A
-    vanishes at <= S-1 points of E.  Let E' be the other points.
+F_i distinct irreducible factors of z1-degree r_i >= 1 and z2-degree s_i,
+and a := deg A.  Then sum e_i r_i <= R-1 and sum e_i s_i <= S-1-a.
+  - The z2-coordinates of E are distinct, so A vanishes at <= a points
+    of E.  Let E' be the other points.
   - At e = (z0, c) in E', sum_i e_i mu_i(e) >= J, where mu_i(e) is the
     order of z0 as a root of F_i(., c).
   - Res_{z1}(F_i, dF_i/dz1) is a nonzero polynomial in z2 of degree
     <= (2 r_i - 1) s_i.  It is divisible by (z2 - c)^{mu_i(e) - 1} for
-    each e (multilinearity of the Sylvester determinant, as in Tao's
-    sketch).  Hence sum_e (mu_i(e) - 1)_+ <= (2 r_i - 1) s_i.
-  - #{e : mu_i(e) >= 1} <= (r_i + s_i) max(N1, N2): apply Schwartz-Zippel
-    to the nonzero polynomial F_i(m + n sqrt D, m - n sqrt D) in (m, n).
-  Summing e_i times these bounds over i, with sum e_i r_i <= R-1 and
-  sum e_i s_i <= S-1:
-      J |E'| <= 2 (R-1)(S-1) + max(N1, N2) (R + S - 2).
+    each e (multilinearity of the Sylvester determinant; Green's Lemma
+    A.1).  Hence sum_e (mu_i(e) - 1)_+ <= 2 r_i s_i.
+  - #{e : mu_i(e) >= 1} <= (r_i + s_i) N: apply Schwartz-Zippel to the
+    nonzero polynomial F_i(m + n sqrt D, m - n sqrt D) in (m, n).
+  Summing e_i times these bounds:
+      J (N1 N2 - a) <= 2 (R-1)(S-1-a) + N (R + S - 2 - a).
+  The right side minus J (N1 N2 - a) is linear in a in [0, S-1], so it is
+  enough to rule out the endpoints a = 0 and a = S-1.
 
 Lemma 2 (Archimedean).  Hadamard with the monomial basis, |alpha| <= rho
 on E, and falling factorial a^(j) <= a^j give
@@ -99,20 +102,26 @@ class Params:
 
 
 def injective(P):
-    """Explicit Lemma 1 criterion."""
-    lhs = P.J * (P.N1 * P.N2 - P.S + 1)
-    rhs = 2 * (P.R - 1) * (P.S - 1) + max(P.N1, P.N2) * (P.R + P.S - 2)
-    return lhs > rhs
+    """Explicit Lemma 1 criterion (exact integers)."""
+    Nm = max(P.N1, P.N2)
+    lhs = P.J * P.N1 * P.N2
+    rhs0 = 2 * (P.R - 1) * (P.S - 1) + Nm * (P.R + P.S - 2)  # deg A = 0
+    rhs1 = P.J * (P.S - 1) + Nm * (P.R - 1)  # deg A = S - 1
+    return lhs > rhs0 and lhs > rhs1
 
 
 def max_R(N1, N2, S, J):
     """Largest R satisfying the Lemma 1 criterion (or 0)."""
     Nm = max(N1, N2)
-    num = J * (N1 * N2 - S + 1) + 2 * (S - 1) - Nm * (S - 2)
-    den = 2 * (S - 1) + Nm
-    if num <= 0:
+    n = N1 * N2
+    # J n > 2 (R-1)(S-1) + Nm (R+S-2)  <=>  den0 R < num0
+    num0 = J * n + 2 * (S - 1) - Nm * (S - 2)
+    den0 = 2 * (S - 1) + Nm
+    # J n > J (S-1) + Nm (R-1)  <=>  Nm R < num1
+    num1 = J * n - J * (S - 1) + Nm
+    if num0 <= 0 or num1 <= 0:
         return 0
-    R = -(-num // den) - 1  # largest R with den * R < num
+    R = min(-(-num0 // den0) - 1, -(-num1 // Nm) - 1)
     return max(R, 0)
 
 

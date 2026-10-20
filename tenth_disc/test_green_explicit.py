@@ -153,6 +153,24 @@ class TestCountingFormulas(unittest.TestCase):
             self.assertTrue(np.all(f <= K * (1 + 1e-12) + 1e-9), (R, S))
             self.assertTrue(np.all(np.diff(f) <= 1e-9 * np.abs(f[:-1]) + 1e-9), (R, S))
 
+    def test_sharpened_criterion_on_new_cases(self):
+        # Cases admitted only thanks to the deg A cancellation (Green's
+        # Lemma 3.1 style); the exact Gram determinant must be nonzero.
+        def old(P):
+            return P.J * (P.N1 * P.N2 - P.S + 1) > (
+                2 * (P.R - 1) * (P.S - 1) + max(P.N1, P.N2) * (P.R + P.S - 2))
+
+        cases = []
+        for N1, N2, S, J in product(range(2, 7), range(1, 6), (2, 3, 4), range(1, 8)):
+            P = Params(N1, N2, max_R(N1, N2, S, J), S, J)
+            if P.R >= 2 and injective(P) and not old(P) and P.R * P.S <= 28 \
+                    and 2 * J * N1 * N2 <= 300:
+                cases.append(P)
+        self.assertGreater(len(cases), 8)
+        for P in cases[:: max(1, len(cases) // 8)]:
+            for d in (7, 43):
+                self.assertGreater(gram_det(T_rows(P, d), d), 0, (P, d))
+
     def test_max_R_is_maximal(self):
         for N1, N2, S, J in ((40, 7, 5, 6), (300, 20, 40, 40), (1000, 3, 9, 30)):
             R = max_R(N1, N2, S, J)

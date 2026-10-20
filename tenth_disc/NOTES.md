@@ -54,16 +54,20 @@ order J.
 
 ## Lemma 1 (injectivity), explicit and general
 
-**If J (N1 N2 − S + 1) > 2(R−1)(S−1) + max(N1, N2)(R + S − 2), then T is
-injective on Λ, so M is a positive integer.**
+Put N = max(N1, N2). **If**
+
+    J·N1N2 > max( 2(R−1)(S−1) + N(R + S − 2),  J(S−1) + N(R−1) ),
+
+**then T is injective on Λ, so M is a positive integer.**
 
 *Proof.* Let P ≠ 0 vanish to horizontal order ≥ J at every point of E. Factor
 P = A(z2) ∏ F_i^{e_i}, where the F_i are distinct irreducibles of z1-degree
-r_i ≥ 1 and z2-degree s_i. Then Σ e_i r_i ≤ R − 1 and deg A + Σ e_i s_i ≤ S − 1.
+r_i ≥ 1 and z2-degree s_i, and put a = deg A. Then Σ e_i r_i ≤ R − 1 and
+Σ e_i s_i ≤ S − 1 − a.
 
-1. The z2-coordinates ᾱ of E are pairwise distinct, and A ≠ 0 has degree ≤ S−1.
-   So A vanishes at ≤ S − 1 points of E. Let E' be the remaining points, so
-   |E'| ≥ N1N2 − S + 1.
+1. The z2-coordinates ᾱ of E are pairwise distinct, and A ≠ 0 has degree a.
+   So A vanishes at ≤ a points of E. Let E' be the remaining points, so
+   |E'| ≥ N1N2 − a.
 2. Take e = (z0, c) ∈ E'. Then F_i(·, c) ≢ 0: otherwise (z2 − c) and its
    conjugate would divide F_i, contradicting irreducibility with r_i ≥ 1.
    Let μ_i(e) be the order of z0 as a root of F_i(·, c). The vanishing
@@ -79,8 +83,13 @@ r_i ≥ 1 and z2-degree s_i. Then Σ e_i r_i ≤ R − 1 and deg A + Σ e_i s_i 
    ≤ (r_i + s_i) max(N1, N2) points of E.
 
 Now combine. Σ_{e∈E'} Σ_i e_i μ_i(e) ≤ Σ_i e_i [(μ−1)_+ count + zero count].
-This is ≤ 2(R−1)(S−1) + max(N1,N2)(R + S − 2), using
-Σ e_i r_i s_i ≤ (R−1)(S−1). The left side is ≥ J|E'|, a contradiction. ∎
+Using Σ e_i r_i s_i ≤ (Σ e_i r_i)(Σ e_i s_i) ≤ (R−1)(S−1−a), this gives
+
+    J(N1N2 − a) ≤ 2(R−1)(S−1−a) + N(R + S − 2 − a).
+
+Rearranged, J·N1N2 is at most a linear function of a ∈ [0, S−1]. A linear
+function is maximised at an endpoint, so J·N1N2 is at most the larger of its
+values at a = 0 and a = S − 1. That contradicts the hypothesis. ∎
 
 *Comparison with Green's note.* This is the argument of Green's Lemma 3.1.
 His Lemma A.1, ord_{z0} F(·, c) ≤ 1 + ord_{c} Res_z(F, ∂_z F), is step 3; he
@@ -92,10 +101,9 @@ differences:
   is used directly, which allows any J and a rectangular centred grid.
 * Green factors over C, and I factor over Q, hence the conjugate argument in
   step 2.
-* Green cancels deg F₀ between the two sides. Doing the same here would
-  sharpen the criterion to
-  J·N1N2 > max(2(R−1)(S−1) + N(R+S−2), J(S−1) + N(R−1)), with N = max(N1, N2).
-  This is not used yet; it would lower the threshold slightly.
+* Green cancels deg F₀ between the two sides; the a = deg A bookkeeping
+  above is the same idea. (An earlier version of these notes did not cancel
+  it, and used the weaker criterion J(N1N2 − S + 1) > 2(R−1)(S−1) + N(R+S−2).)
 
 Lemma 3 below is exactly Green's Lemma 5.1. He uses the pairing
 tr(αβ̄) = 2 Re(αβ̄), which changes M by the harmless factor 2^{RS}.
@@ -132,11 +140,30 @@ The left side is bounded below as follows:
   K_p ≤ S R(R−1)/(2p) together with the split-prime bound, and subtract the
   ramified prime p = d if d < R.
 * For p ≤ 2·10^6, sum K_p exactly.
-* Beyond that, use Abel summation against the decreasing minorant
-  f(t) = t·G((R−1)/t − 1) ≤ K_t, where G is the integral of the continuous
-  extension of q ↦ Σ_j min(q, S−1−j). Combine it with Rosser–Schoenfeld,
-  θ(t) > t(1 − 1/(2 log t)) for t ≥ 563, on a fine geometric grid. Only
-  monotonicity is used, so the discretisation is one-sided.
+* Beyond that, use Abel summation against the decreasing minorant f(t) of
+  K_t (lemma below), with Rosser–Schoenfeld,
+  θ(t) > t(1 − 1/(2 log t)) for t ≥ 563, on a fine geometric grid t_k. Only
+  monotonicity is used, so the discretisation is one-sided:
+  Σ_{P0<p≤X} f(p) log p = −f(P0)θ(P0) + ∫_{P0}^{X} θ(t)(−f′(t)) dt
+  ≥ −f(P0)θ(P0) + Σ_k θ(t_k)(f(t_k) − f(t_{k+1})), using f(X) = 0.
+
+**Minorant lemma.** Put g(q) := Σ_{j<S} min(q, S−1−j). For integers 0 ≤ q ≤ S−1
+this is g(q) = q(S − ½) − q²/2, and g(q) = S(S−1)/2 for q ≥ S − 1. Let g̃ be the
+continuous extension: the same formulas on [0, S−1] and beyond, and 0 for
+y ≤ 0. Let G(Y) = ∫₀^Y g̃. Then
+
+    f(t) := t·G((R−1)/t − 1)   satisfies   f(p) ≤ K_p for every prime p,
+    and f is nonincreasing on t > 0.
+
+*Proof.* g̃ is nondecreasing: its derivative is S − ½ − y > 0 on [0, S−1], and
+it is constant afterwards. Hence g(⌊i/p⌋) ≥ g̃(i/p − 1), since
+⌊i/p⌋ > i/p − 1. The map i ↦ h(i) := g̃(i/p − 1) is nondecreasing, so
+h(i) ≥ ∫_{i−1}^{i} h. Therefore
+
+    K_p = Σ_{i<R} g(⌊i/p⌋) ≥ ∫₀^{R−1} h = p·G((R−1)/p − 1) = f(p).
+
+For monotonicity put y = (R−1)/t − 1. Then f′(t) = G(y) − (y+1)g̃(y), and this is
+≤ 0 because G(y) ≤ y·g̃(y) (g̃ is nondecreasing). Also f(R−1) = 0. ∎
 
 If some admissible parameters make (\*) fail for all d ∈ [d_lo, d_hi], none of
 those d has class number one. The split and ramified terms are decreasing in
