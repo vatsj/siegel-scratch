@@ -18,8 +18,8 @@ certificate is re-checked in outward-rounded interval arithmetic
 
 > **Claim (verified in interval arithmetic).** Green's polynomial-method argument, with
 > the explicit constants below, shows that an imaginary quadratic field
-> Q(√−d) with d > 163 and class number one must have d < 515,960.
-> An elementary check (every prime d ≡ 3 mod 8 in (163, 515,960] has a prime
+> Q(√−d) with d > 163 and class number one must have d < 515,133.
+> An elementary check (every prime d ≡ 3 mod 8 in (163, 515,133] has a prime
 > p < d/4 with (−d/p) = +1) disposes of the rest. So the method recovers
 > the class number one theorem without Heegner/Stark/Baker, modulo the
 > caveats at the end.
@@ -28,8 +28,8 @@ For comparison: Goldfeld–Oesterlé give d ≤ e^55 ≈ 7.7·10^23.
 
 | range of d | how it is excluded | where |
 |---|---|---|
-| (163, 515,960] | some p < d/4 splits, so h > 1 (elementary) | `certify.small_d_check` |
-| [515,960, 10^200] | finitely many intervals, each with explicit parameters (N1, N2, R, S, J) violating (\*) | `results/certificate.json`, `certify.py --verify` |
+| (163, 515,133] | some p < d/4 splits, so h > 1 (elementary) | `certify.small_d_check` |
+| [515,133, 10^200] | finitely many intervals, each with explicit parameters (N1, N2, R, S, J) violating (\*) | `results/certificate.json`, `certify.py --verify` |
 | [10^40, ∞) | closed form: margin ≥ 0.18 log d − 16 > 0 | `tail.py`, derivation below |
 
 ## Setup
@@ -206,7 +206,7 @@ tests check it against the full numerical engine.
 * **Rigour.** `rigorous.py` re-evaluates every certificate interval and the
   tail constants with outward-rounded interval arithmetic. Floats only choose
   the Abel grid points. All 18 margins are certified positive (smallest
-  0.00172, in units of R²S), and they agree with the float values to 6
+  0.0021, in units of R²S), and they agree with the float values to 6
   digits. The script takes about 5 minutes.
 * Lemma 1 has been compared with Green's Lemma 3.1/A.1 (see the remark
   after its proof). It is the same argument in a slightly more general
@@ -216,4 +216,4 @@ tests check it against the full numerical engine.
   θ(x) > x(1 − 1/(2 log x)) for x ≥ 563, used only for x ≥ 2·10^6 and checked
   directly below that (`test_rigorous.py`); genus theory; the norm form of
   split primes; Hadamard's inequality.
-* The parameter search is heuristic, so a better optimiser may lower 515,960.
+* The parameter search is heuristic, so a better optimiser may lower 515,133.

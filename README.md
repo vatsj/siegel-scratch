@@ -45,7 +45,7 @@ yet a certified interval computation. Also, this reduction is elementary and
 classical in spirit (Heilbronn–Linfoot-style use of the principal form), so
 there is no claim of novelty.
 
-## Step 2: Green's argument made explicit → d < 515,960
+## Step 2: Green's argument made explicit → d < 515,133
 
 Details and proofs are in [`tenth_disc/NOTES.md`](tenth_disc/NOTES.md).
 Rather than passing through (H), I apply Green's lattice argument directly to
@@ -60,14 +60,14 @@ are sparse, so the left side is large and the inequality fails once d is large.
 
 | range | excluded by |
 |---|---|
-| (163, 515,960] | elementary: some prime p ≤ 43 below d/4 splits |
-| [515,960, 10^200] | 18 intervals with explicit parameters ([`results/certificate.json`](tenth_disc/results/certificate.json)) |
+| (163, 515,133] | elementary: some prime p ≤ 43 below d/4 splits |
+| [515,133, 10^200] | 18 intervals with explicit parameters ([`results/certificate.json`](tenth_disc/results/certificate.json)) |
 | [10^40, ∞) | closed form: margin ≥ 0.18 log d − 16 ([`tail.py`](tenth_disc/tail.py)) |
 
 So Green's argument recovers the class number one theorem with threshold
 ≈ 5·10^5, compared with Oesterlé's e^55 ≈ 10^24. Everything is re-checked in
 **outward-rounded interval arithmetic** (`rigorous.py`): all 18 margins are
-certified positive (smallest 0.00172), and so is the tail bound.
+certified positive (smallest 0.0021), and so is the tail bound.
 
 **Checks:**
 - brute-force exact Gram determinants confirm Lemmas 1–3 on small cases (the
